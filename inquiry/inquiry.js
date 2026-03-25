@@ -19,6 +19,7 @@ document.addEventListener("scroll", () => {
 (function() {
     // Get DOM elements
     const chatLogo = document.getElementById('chatLogo');
+    const chatLogoContainer = document.getElementById('chatLogoContainer');
     const inquiryModal = document.getElementById('inquiryModal');
     const notificationBadge = document.querySelector('.notification-badge');
     
@@ -108,6 +109,131 @@ document.addEventListener("scroll", () => {
     let expandTimer;
     let isExpanded = false;
     let isHovering = false;
+    
+    // ===== STRICT FOOTER VISIBILITY BEHAVIOR (MOBILE ONLY) =====
+    let footerElement = null;
+    let isFooterAwareActive = false;
+    
+    // Function to find the footer element
+    function findFooterElement() {
+        footerElement = document.querySelector('.footer');
+        return footerElement !== null;
+    }
+    
+    // Check if footer is visible in the viewport
+    function isFooterVisible() {
+        if (!footerElement) return false;
+        
+        const footerRect = footerElement.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        
+        // Check if ANY part of the footer is visible in the viewport
+        const isFooterInViewport = footerRect.top < viewportHeight && footerRect.bottom > 0;
+        
+        // Also check if the footer's top is within the viewport (more precise)
+        const isFooterTopVisible = footerRect.top >= 0 && footerRect.top <= viewportHeight;
+        
+        // Check if the button is overlapping or would overlap with footer
+        if (chatLogoContainer && isFooterInViewport) {
+            const buttonRect = chatLogoContainer.getBoundingClientRect();
+            const footerTop = footerRect.top;
+            
+            // Only activate if footer is actually visible AND the button would overlap
+            // or if footer top is within the button's proximity
+            const buttonBottom = buttonRect.bottom;
+            const gapToFooter = footerTop - buttonBottom;
+            
+            // Activate when footer is visible AND button is within 100px of footer or overlapping
+            // This ensures we only move when footer is actually in view and button is near
+            return isFooterInViewport && gapToFooter < 100;
+        }
+        
+        return isFooterInViewport;
+    }
+    
+    // Update button position based on footer visibility
+    function updateButtonPosition() {
+        // Only apply on mobile devices
+        if (window.innerWidth > 768) {
+            // Reset for desktop - ensure button is visible
+            if (isFooterAwareActive) {
+                if (chatLogoContainer) {
+                    chatLogoContainer.classList.remove('footer-aware');
+                }
+                isFooterAwareActive = false;
+            }
+            return;
+        }
+        
+        // Ensure footer element is found
+        if (!footerElement) {
+            if (!findFooterElement()) return;
+        }
+        
+        // Check if footer is visible in viewport
+        const footerVisible = isFooterVisible();
+        
+        if (footerVisible && !isFooterAwareActive) {
+            // Activate footer-aware mode - move button up
+            isFooterAwareActive = true;
+            chatLogoContainer.classList.add('footer-aware');
+        } 
+        else if (!footerVisible && isFooterAwareActive) {
+            // Deactivate footer-aware mode - return to default position
+            isFooterAwareActive = false;
+            chatLogoContainer.classList.remove('footer-aware');
+        }
+    }
+    
+    // Throttled scroll handler using requestAnimationFrame
+    let ticking = false;
+    function handleScroll() {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                updateButtonPosition();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }
+    
+    // Handle resize events
+    function handleResize() {
+        if (window.innerWidth <= 768) {
+            // Re-find footer on resize (DOM might have changed)
+            findFooterElement();
+            updateButtonPosition();
+        } else {
+            // Reset for desktop
+            if (isFooterAwareActive) {
+                if (chatLogoContainer) {
+                    chatLogoContainer.classList.remove('footer-aware');
+                }
+                isFooterAwareActive = false;
+            }
+        }
+    }
+    
+    // Initialize footer-aware behavior on mobile
+    function initFooterAwareBehavior() {
+        if (window.innerWidth <= 768) {
+            if (findFooterElement()) {
+                // Initial position check
+                setTimeout(updateButtonPosition, 100);
+                
+                // Add scroll listener
+                window.addEventListener('scroll', handleScroll);
+                window.addEventListener('resize', handleResize);
+            }
+        }
+    }
+    
+    // Call initialization after DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFooterAwareBehavior);
+    } else {
+        initFooterAwareBehavior();
+    }
     
     function preventBodyScroll(prevent) {
         if (prevent) {
@@ -625,6 +751,10 @@ document.addEventListener("scroll", () => {
                     }
                 }, 50);
             }
+            // Recalculate footer-aware position after orientation change
+            if (window.innerWidth <= 768) {
+                setTimeout(updateButtonPosition, 100);
+            }
         }, 300);
     });
     
@@ -635,6 +765,18 @@ document.addEventListener("scroll", () => {
             } else {
                 const fallbackBtn = document.getElementById('mobile-excel-back-btn-fallback');
                 if (fallbackBtn) fallbackBtn.remove();
+            }
+        }
+        // Recalculate footer-aware position on resize
+        if (window.innerWidth <= 768) {
+            handleResize();
+        } else {
+            // Reset for desktop
+            if (isFooterAwareActive) {
+                if (chatLogoContainer) {
+                    chatLogoContainer.classList.remove('footer-aware');
+                }
+                isFooterAwareActive = false;
             }
         }
     });
