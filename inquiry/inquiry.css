@@ -16,10 +16,16 @@
     .chat-logo-container {
         left: 50% !important;
         right: auto !important;
-        transform: translateX(-50%) !important;
         bottom: 20px !important;
+        transform: translateX(-50%) !important;
         width: auto !important;
         position: fixed !important;
+        transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+    
+    /* Footer-aware state - only applied when footer is visible */
+    .chat-logo-container.footer-aware {
+        transform: translateX(-50%) translateY(-85px) !important;
     }
     
     /* Preserve original button design exactly */
@@ -256,7 +262,7 @@
     justify-content: center;
     width: 28px;
     height: 28px;
-    line-height: 1;
+    line-height: 2;
     margin-right: 8px;
     transition: opacity 0.2s ease, width 0.2s ease, margin-right 0.2s ease;
     opacity: 1;
@@ -614,4 +620,3 @@
         border-radius: 10px;
     }
 }
-
