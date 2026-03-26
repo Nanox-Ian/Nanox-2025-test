@@ -30,8 +30,8 @@
     
     /* Preserve original button design exactly */
     .chat-logo {
-        width: 224px !important; /* Original desktop width */
-        height: 48px !important; /* Original desktop height */
+        width: 224px !important;
+        height: 48px !important;
         margin-left: auto !important;
         margin-right: auto !important;
         margin-top: 30px;
@@ -92,22 +92,29 @@
         outline: none !important;
     }
     
-    /* Keep icon exactly as original */
+    /* FIXED: Icon with proper spacing */
     .chat-icon {
         font-size: 28px !important;
         width: 28px !important;
         height: 28px !important;
-        margin-right: 8px !important;
+        margin-right: 12px !important;
         color: #40526b;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        line-height: 1;
+        display: inline-block !important;
+        line-height: 1 !important;
         opacity: 1 !important;
         transform: none !important;
         -webkit-transform: none !important;
         transition: none !important;
         -webkit-transition: none !important;
+        flex: 0 0 auto !important;
+        vertical-align: middle !important;
+        text-align: center !important;
+        background: none !important;
+        border: none !important;
+        padding: 0 !important;
+        box-sizing: content-box !important;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
     }
     
     /* Prevent ANY icon changes on interaction */
@@ -117,12 +124,13 @@
         font-size: 28px !important;
         width: 28px !important;
         height: 28px !important;
-        margin-right: 8px !important;
+        margin-right: 12px !important;
         opacity: 1 !important;
         transform: none !important;
         -webkit-transform: none !important;
         transition: none !important;
         -webkit-transition: none !important;
+        flex: 0 0 auto !important;
     }
     
     /* Keep header text exactly as original */
@@ -138,6 +146,7 @@
         -webkit-transition: none !important;
         transform: none !important;
         -webkit-transform: none !important;
+        line-height: 1.2 !important;
     }
     
     /* Keep header container exactly as original */
@@ -244,29 +253,39 @@
 /* Desktop hover effects - EXACT MATCH TO IMAGE */
 @media (min-width: 769px) {
     .chat-logo:hover {
-        width: 255px;  /* Optimized width for the exact text split */
-        height: 85px;  /* Height to accommodate three lines with proper spacing */
+        width: 255px;
+        height: 85px;
         border-radius: 0.75rem;
         background-color: white;
         transform: translateY(-3px);
-        padding: 0 8px;  /* Minimal padding to prevent text touching edges */
+        padding: 0 8px;
     }
 }
 
-/* ================= CHAT ICON ================= */
+/* ================= CHAT ICON - Complete Fix with Proper Spacing ================= */
 .chat-icon {
     font-size: 28px;
-    color: rgb(11, 25, 42);
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 28px;
     height: 28px;
-    line-height: 2;
-    margin-right: 8px;
+    color: rgb(11, 25, 42);
+    display: inline-block;
+    line-height: 1;
+    margin-right: 12px;
     transition: opacity 0.2s ease, width 0.2s ease, margin-right 0.2s ease;
     opacity: 1;
-    font-family: "FontAwesome";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    flex: 0 0 auto;
+    vertical-align: middle;
+    text-align: center;
+    background: none;
+    border: none;
+    padding: 0;
+    box-sizing: content-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: scale(1);
+    transform-origin: center;
 }
 
 /* Desktop hover effects - icon disappears */
@@ -276,6 +295,12 @@
         width: 0;
         margin-right: 0;
     }
+}
+
+/* Ensure icon container doesn't cause stretching */
+.inquire_header_container .chat-icon {
+    flex-shrink: 0;
+    flex-grow: 0;
 }
 
 /* ================= TEXT CONTAINER ================= */
@@ -307,7 +332,7 @@
 /* Desktop hover effects - move header up */
 @media (min-width: 769px) {
     .chat-logo:hover .inquire_header_container {
-        transform: translateY(-20px);  /* Move up to make room for three lines */
+        transform: translateY(-20px);
     }
 }
 
@@ -321,6 +346,7 @@
     letter-spacing: 0.5px;
     text-transform: uppercase;
     transition: all 0.25s ease;
+    line-height: 1.2;
 }
 
 /* ===== EXACT OUTCOME AS SHOWN IN IMAGE ===== */
@@ -328,7 +354,7 @@
 /* Subheader container - THREE LINES AS SHOWN IN IMAGE */
 .inquire_subheader_container {
     position: absolute;
-    bottom: 14px;  /* Positioned at bottom */
+    bottom: 14px;
     left: 0;
     right: 0;
     text-align: center;
@@ -355,8 +381,8 @@
 
 /* First subheader line - "Tell us how we can" */
 .inquire_subheader_line1 {
-    font-size: 14px;  /* Readable size */
-    font-weight: 600;  /* Semi-bold for clarity */
+    font-size: 14px;
+    font-weight: 600;
     color: rgb(11, 25, 42);
     margin: 0;
     padding: 0;
@@ -369,8 +395,8 @@
 
 /* Second subheader line - "support your business." */
 .inquire_subheader_line2 {
-    font-size: 14px;  /* Same readable size */
-    font-weight: 600;  /* Same semi-bold weight */
+    font-size: 14px;
+    font-weight: 600;
     color: rgb(11, 25, 42);
     margin: 0;
     padding: 0;
@@ -380,9 +406,6 @@
     width: 100%;
     white-space: nowrap;
 }
-
-/* Add a space after "can" in the HTML - this will be handled in index.html */
-/* The line break is already in the HTML structure */
 
 /* Hide original single-line subheader */
 .inquire_subheader {
