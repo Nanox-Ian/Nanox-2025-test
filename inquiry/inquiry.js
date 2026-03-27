@@ -710,20 +710,7 @@ document.addEventListener("scroll", () => {
         }
     });
     
-    const iframe = document.querySelector('.chat-modal-body iframe');
-    if (iframe) {
-        iframe.addEventListener('load', function() {
-            console.log('Chat form iframe loaded successfully');
-            if (window.innerWidth <= 768) {
-                addMobileBackButton();
-            }
-            try {
-                iframe.contentWindow.document.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                });
-            } catch (e) {}
-        });
-    }
+   const iframe = document.querySelector('.chat-modal-body iframe');
     
     chatLogo.addEventListener('touchstart', function(e) {
         e.stopPropagation();
