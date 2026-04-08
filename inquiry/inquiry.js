@@ -22,6 +22,50 @@ document.addEventListener("scroll", () => {
     const chatLogoContainer = document.getElementById('chatLogoContainer');
     const inquiryModal = document.getElementById('inquiryModal');
     const notificationBadge = document.querySelector('.notification-badge');
+    const msFormIframe = document.getElementById('msForm');
+    
+    // ===== MS FORMS AUTO-REFRESH / CACHE BUSTING FIX =====
+    // Base URL for MS Forms
+    const MS_FORM_BASE_URL = "https://forms.office.com/r/bVTYYTCte1";
+    
+    // Function to refresh the iframe with cache busting
+    function refreshMsForm() {
+        if (!msFormIframe) return;
+        
+        // Generate unique timestamp for cache busting
+        const cacheBuster = new Date().getTime();
+        const newSrc = `${MS_FORM_BASE_URL}?t=${cacheBuster}`;
+        
+        // Only update if src has changed to avoid unnecessary reloads
+        if (msFormIframe.src !== newSrc) {
+            msFormIframe.src = newSrc;
+        }
+    }
+    
+    // Function to refresh form when modal is opened
+    function refreshFormOnOpen() {
+        refreshMsForm();
+    }
+    
+    // Optional: Auto-refresh every 30 seconds while modal is open (uncomment if needed)
+    let refreshInterval = null;
+    
+    function startAutoRefresh() {
+        if (refreshInterval) clearInterval(refreshInterval);
+        refreshInterval = setInterval(() => {
+            // Only refresh if modal is visible
+            if (inquiryModal && inquiryModal.style.display === 'flex') {
+                refreshMsForm();
+            }
+        }, 30000); // refresh every 30 seconds
+    }
+    
+    function stopAutoRefresh() {
+        if (refreshInterval) {
+            clearInterval(refreshInterval);
+            refreshInterval = null;
+        }
+    }
     
     // Create confirmation modal elements
     const confirmationModal = document.createElement('div');
@@ -297,8 +341,11 @@ document.addEventListener("scroll", () => {
         preventBodyScroll(false);
     }
     
-    // Open Microsoft Forms modal
+    // Open Microsoft Forms modal with fresh content
     function openInquiryModal() {
+        // Refresh the form before showing (ensures fresh content)
+        refreshMsForm();
+        
         inquiryModal.style.display = 'flex';
         preventBodyScroll(true);
         
@@ -306,7 +353,21 @@ document.addEventListener("scroll", () => {
             notificationBadge.style.display = 'none';
         }
         
+        // Start auto-refresh interval (optional - uncomment if needed)
+        // startAutoRefresh();
+        
         setTimeout(addMobileBackButton, 500);
+    }
+    
+    // Close inquiry modal and stop auto-refresh
+    function closeInquiryModal() {
+        inquiryModal.style.display = 'none';
+        preventBodyScroll(false);
+        // Stop auto-refresh when modal closes (optional)
+        // stopAutoRefresh();
+        
+        const fallbackBtn = document.getElementById('mobile-excel-back-btn-fallback');
+        if (fallbackBtn) fallbackBtn.remove();
     }
     
     // Function to get exact 3-dot menu dimensions
@@ -528,8 +589,7 @@ document.addEventListener("scroll", () => {
             backButton.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                inquiryModal.style.display = 'none';
-                preventBodyScroll(false);
+                closeInquiryModal();
             });
             
             // Insert into iframe
@@ -620,8 +680,7 @@ document.addEventListener("scroll", () => {
         backButton.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            inquiryModal.style.display = 'none';
-            preventBodyScroll(false);
+            closeInquiryModal();
             this.remove();
         });
         
@@ -690,10 +749,7 @@ document.addEventListener("scroll", () => {
     
     inquiryModal.addEventListener('click', function(e) {
         if (e.target === inquiryModal) {
-            inquiryModal.style.display = 'none';
-            preventBodyScroll(false);
-            const fallbackBtn = document.getElementById('mobile-excel-back-btn-fallback');
-            if (fallbackBtn) fallbackBtn.remove();
+            closeInquiryModal();
         }
     });
     
@@ -702,15 +758,12 @@ document.addEventListener("scroll", () => {
             if (confirmationModal.style.display === 'flex') {
                 hideConfirmationModal();
             } else if (inquiryModal.style.display === 'flex') {
-                inquiryModal.style.display = 'none';
-                preventBodyScroll(false);
-                const fallbackBtn = document.getElementById('mobile-excel-back-btn-fallback');
-                if (fallbackBtn) fallbackBtn.remove();
+                closeInquiryModal();
             }
         }
     });
     
-   const iframe = document.querySelector('.chat-modal-body iframe');
+    const iframe = document.querySelector('.chat-modal-body iframe');
     
     chatLogo.addEventListener('touchstart', function(e) {
         e.stopPropagation();
@@ -733,6 +786,8 @@ document.addEventListener("scroll", () => {
                 inquiryModal.style.display = 'none';
                 setTimeout(function() {
                     inquiryModal.style.display = 'flex';
+                    // Refresh form on orientation change to ensure proper display
+                    refreshMsForm();
                     if (window.innerWidth <= 768) {
                         addMobileBackButton();
                     }
@@ -774,13 +829,13 @@ document.addEventListener("scroll", () => {
         },
         close: function() {
             hideConfirmationModal();
-            inquiryModal.style.display = 'none';
-            preventBodyScroll(false);
-            const fallbackBtn = document.getElementById('mobile-excel-back-btn-fallback');
-            if (fallbackBtn) fallbackBtn.remove();
+            closeInquiryModal();
         },
         isOpen: function() {
             return confirmationModal.style.display === 'flex' || inquiryModal.style.display === 'flex';
+        },
+        refreshForm: function() {
+            refreshMsForm();
         },
         setNotificationCount: function(count) {
             if (notificationBadge) {
@@ -794,5 +849,5 @@ document.addEventListener("scroll", () => {
         }
     };
     
-    console.log('Chat inquiry system loaded successfully');
+    console.log('Chat inquiry system loaded successfully with MS Forms cache-busting fix');
 })();
