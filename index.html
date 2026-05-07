@@ -33,6 +33,7 @@
     <link href="./dist/css/style.css" type="text/css" rel="stylesheet">
 
     <link rel="stylesheet" href="inquiry/inquiry.css">
+    <link rel="stylesheet" href="product-inquiry/product-inquiry.css">
     
     <link rel="icon" type="image/x-icon" href="./dist/assets/nanox.ico">
     <title>Nanox Philippines</title>
@@ -472,13 +473,24 @@
             <div class="chat-modal" id="inquiryModal">
                 <div class="chat-modal-content">
                     <div class="chat-modal-body">
-                        <iframe id="msForm" src="https://forms.office.com/r/bVTYYTCte1" frameborder="0" width="100%" height="100%" title="Inquiry Form"></iframe>
+                        <iframe
+                            id="msForm"
+                            src=""
+                            frameborder="0"
+                            width="100%"
+                            height="100%"
+                            title="Inquiry Form"
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            allowfullscreen>
+                        </iframe>
                     </div>
                 </div>
             </div>
             
-        <script src="inquiry/inquiry.js"></script>
-
+        <script type="module" src="inquiry/inquiry.js"></script>
+        <script type="module" src="product-inquiry/product-inquiry.js"></script>
+        
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -488,4 +500,3 @@
         <script src="./dist/javascript/app.js"></script>  
     </body>
 </html>
-
