@@ -1,6 +1,6 @@
 .product-inquiry-btn {
     /* Exact dimensions from .chat-logo */
-    width: 224px;
+    width: 260px;
     height: 48px;
 
     /* Exact typography from .inquire_header */
@@ -59,7 +59,7 @@
 /* Mobile — exact .chat-logo mobile values */
 @media (max-width: 768px) {
     .product-inquiry-btn {
-        width: 224px;
+        width: 270px;
         height: 48px;
         border-radius: 0.75rem;
         border: 3px solid #40526b;
