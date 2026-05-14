@@ -167,7 +167,7 @@ function injectProductInquiryButtons(onButtonClick) {
     const btn = document.createElement("button");
     btn.className = "product-inquiry-btn";
     btn.setAttribute("aria-label", "Open product inquiry form");
-    btn.textContent = "Ask About This Product";
+    btn.textContent = "Product Inquiry";
     btn.addEventListener("click", (e) => {
         e.stopPropagation();
         onButtonClick();
