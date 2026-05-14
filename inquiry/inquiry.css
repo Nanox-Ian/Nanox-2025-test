@@ -30,7 +30,7 @@
     
     /* Preserve original button design exactly */
     .chat-logo {
-        width: 224px !important;
+        width: 254px !important;
         height: 48px !important;
         margin-left: auto !important;
         margin-right: auto !important;
@@ -75,7 +75,7 @@
     .chat-logo:visited,
     .chat-logo:focus-within,
     .chat-logo:focus-visible {
-        width: 224px !important;
+        width: 254px !important;
         height: 48px !important;
         background-color: white !important;
         border: 3px solid #0b192a !important;
@@ -222,7 +222,7 @@
 
 /* ================= REDESIGNED CHAT BUTTON ================= */
 .chat-logo {
-    width: 224px;
+    width: 254px;
     height: 48px;
     background-color: white;
     margin-top: 30px;
