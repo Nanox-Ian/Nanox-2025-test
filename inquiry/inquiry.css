@@ -1,0 +1,645 @@
+.chat-logo-container {
+    position: fixed;
+    bottom: 6px;
+    right: 14px;
+    margin: 0;
+    padding: 0;
+    z-index: 999999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* ================= MOBILE OPTIMIZATIONS ================= */
+@media (max-width: 768px) {
+    .chat-logo-container {
+        left: 50% !important;
+        right: auto !important;
+        bottom: 20px !important;
+        transform: translateX(-50%) !important;
+        width: auto !important;
+        position: fixed !important;
+        transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+    
+    /* Footer-aware state - only applied when footer is visible */
+    .chat-logo-container.footer-aware {
+        transform: translateX(-50%) translateY(-85px) !important;
+    }
+    
+    /* Preserve original button design exactly */
+    .chat-logo {
+        width: 254px !important;
+        height: 48px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        margin-top: 30px;
+        background-color: white;
+        border-radius: 0.75rem;
+        border: 3px solid #40526b;
+        
+        /* Disable all transforms and transitions */
+        transform: none !important;
+        -webkit-transform: none !important;
+        transition: none !important;
+        -webkit-transition: none !important;
+        
+        /* Remove any scaling effects */
+        scale: 1 !important;
+        -webkit-scale: 1 !important;
+        
+        /* Remove default browser tap effects */
+        -webkit-tap-highlight-color: transparent !important;
+        -webkit-appearance: none !important;
+        appearance: none !important;
+        outline: none !important;
+        -webkit-touch-callout: none !important;
+        -webkit-user-select: none !important;
+        user-select: none !important;
+        
+        /* Keep original display properties */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: #40526b;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    /* Disable ALL interactive state changes - preserve original design */
+    .chat-logo:hover,
+    .chat-logo:active,
+    .chat-logo:focus,
+    .chat-logo:visited,
+    .chat-logo:focus-within,
+    .chat-logo:focus-visible {
+        width: 254px !important;
+        height: 48px !important;
+        background-color: white !important;
+        border: 3px solid #0b192a !important;
+        border-radius: 0.75rem !important;
+        box-shadow: 0 4px 15px rgba(11, 25, 42, 0.3) !important;
+        transform: none !important;
+        -webkit-transform: none !important;
+        scale: 1 !important;
+        -webkit-scale: 1 !important;
+        transition: none !important;
+        -webkit-transition: none !important;
+        margin-top: 30px !important;
+        opacity: 1 !important;
+        outline: none !important;
+    }
+    
+    /* FIXED: Icon with proper spacing */
+    .chat-icon {
+        font-size: 20px !important;
+        width: 20px !important;
+        height: 20px !important;
+        margin-right: 12px !important;
+        color: #40526b;
+        display: inline-block !important;
+        line-height: 1 !important;
+        opacity: 1 !important;
+        transform: none !important;
+        -webkit-transform: none !important;
+        transition: none !important;
+        -webkit-transition: none !important;
+        flex: 0 0 auto !important;
+        vertical-align: middle !important;
+        text-align: center !important;
+        background: none !important;
+        border: none !important;
+        padding: 0 !important;
+        box-sizing: content-box !important;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+    }
+    
+    /* Prevent ANY icon changes on interaction */
+    .chat-logo:hover .chat-icon,
+    .chat-logo:active .chat-icon,
+    .chat-logo:focus .chat-icon {
+        font-size: 20px !important;
+        width: 20px !important;
+        height: 20px !important;
+        margin-right: 12px !important;
+        opacity: 1 !important;
+        transform: none !important;
+        -webkit-transform: none !important;
+        transition: none !important;
+        -webkit-transition: none !important;
+        flex: 0 0 auto !important;
+    }
+    
+    /* Keep header text exactly as original */
+    .inquire_header {
+        font-size: 18px !important;
+        font-weight: 797;
+        white-space: nowrap;
+        color: #40526b;
+        margin: 0;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        transition: none !important;
+        -webkit-transition: none !important;
+        transform: none !important;
+        -webkit-transform: none !important;
+        line-height: 1.2 !important;
+    }
+    
+    /* Keep header container exactly as original */
+    .inquire_header_container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        transform: none !important;
+        -webkit-transform: none !important;
+        transition: none !important;
+        -webkit-transition: none !important;
+    }
+    
+    /* Prevent header container changes on interaction */
+    .chat-logo:hover .inquire_header_container,
+    .chat-logo:active .inquire_header_container,
+    .chat-logo:focus .inquire_header_container {
+        transform: none !important;
+        -webkit-transform: none !important;
+        justify-content: center !important;
+    }
+    
+    /* Completely hide subheader on mobile - it shouldn't appear at all */
+    .inquire_subheader_container,
+    .inquire_subheader_line1,
+    .inquire_subheader_line2,
+    .inquire_subheader {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        width: 0 !important;
+        overflow: hidden !important;
+        pointer-events: none !important;
+        position: absolute !important;
+        z-index: -1 !important;
+    }
+    
+    /* Prevent subheader from ever appearing */
+    .chat-logo:hover .inquire_subheader_container,
+    .chat-logo:active .inquire_subheader_container,
+    .chat-logo:focus .inquire_subheader_container {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        width: 0 !important;
+        overflow: hidden !important;
+        pointer-events: none !important;
+    }
+    
+    /* Keep header text stable */
+    .chat-logo:hover .inquire_header,
+    .chat-logo:active .inquire_header,
+    .chat-logo:focus .inquire_header {
+        margin-left: 0 !important;
+        transform: none !important;
+        -webkit-transform: none !important;
+    }
+    
+    /* Ensure text container stays stable */
+    .chat-text {
+        transition: none !important;
+        -webkit-transition: none !important;
+        transform: none !important;
+        -webkit-transform: none !important;
+    }
+}
+
+/* ================= REDESIGNED CHAT BUTTON ================= */
+.chat-logo {
+    width: 254px;
+    height: 48px;
+    background-color: white;
+    margin-top: 30px;
+    border-radius: 0.75rem;
+    border: 3px solid #40526b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #40526b;
+    position: relative;
+    transition: all 0.25s ease;
+    overflow: hidden;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.chat-logo:active {
+    transform: none !important;
+    -webkit-transform: none !important;
+    scale: 1 !important;
+    -webkit-scale: 1 !important;
+    transition: none !important;
+}
+
+/* Desktop hover effects - EXACT MATCH TO IMAGE */
+@media (min-width: 769px) {
+    .chat-logo:hover {
+        width: 255px;
+        height: 85px;
+        border-radius: 0.75rem;
+        background-color: white;
+        transform: translateY(-3px);
+        padding: 0 8px;
+    }
+}
+
+/* ================= CHAT ICON - Complete Fix with Proper Spacing ================= */
+.chat-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+    color: rgb(11, 25, 42);
+    display: inline-block;
+    line-height: 1;
+    margin-right: 12px;
+    transition: opacity 0.2s ease, width 0.2s ease, margin-right 0.2s ease;
+    opacity: 1;
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    flex: 0 0 auto;
+    vertical-align: middle;
+    text-align: center;
+    background: none;
+    border: none;
+    padding: 0;
+    box-sizing: content-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: scale(1);
+    transform-origin: center;
+}
+
+/* Desktop hover effects - icon disappears */
+@media (min-width: 769px) {
+    .chat-logo:hover .chat-icon {
+        opacity: 0;
+        width: 0;
+        margin-right: 0;
+    }
+}
+
+/* Ensure icon container doesn't cause stretching */
+.inquire_header_container .chat-icon {
+    flex-shrink: 0;
+    flex-grow: 0;
+}
+
+/* ================= TEXT CONTAINER ================= */
+.chat-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.2;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: all 0.25s ease;
+}
+
+/* Header container */
+.inquire_header_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    position: relative;
+    z-index: 3;
+    transition: all 0.25s ease;
+    width: 100%;
+}
+
+/* Desktop hover effects - move header up */
+@media (min-width: 769px) {
+    .chat-logo:hover .inquire_header_container {
+        transform: translateY(-20px);
+    }
+}
+
+/* Header text */
+.inquire_header {
+    font-size: 18px;
+    font-weight: 797;
+    white-space: nowrap;
+    color: rgb(11, 25, 42);
+    margin: 0;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: all 0.25s ease;
+    line-height: 1.2;
+}
+
+/* ===== EXACT OUTCOME AS SHOWN IN IMAGE ===== */
+
+/* Subheader container - THREE LINES AS SHOWN IN IMAGE */
+.inquire_subheader_container {
+    position: absolute;
+    bottom: 14px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    width: 100%;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.2s ease, transform 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+/* Desktop hover effects */
+@media (min-width: 769px) {
+    .chat-logo:hover .inquire_subheader_container {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* First subheader line - "Tell us how we can" */
+.inquire_subheader_line1 {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(11, 25, 42);
+    margin: 0;
+    padding: 0;
+    line-height: 0.9;
+    text-align: center;
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+}
+
+/* Second subheader line - "support your business." */
+.inquire_subheader_line2 {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(11, 25, 42);
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    text-align: center;
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+}
+
+/* Hide original single-line subheader */
+.inquire_subheader {
+    display: none;
+}
+
+/* Click hint - Hidden by default */
+.click-hint {
+    display: none;
+}
+
+/* ================= MODAL (UNCHANGED) ================= */
+.chat-modal {
+    inset: 0;
+    display: none;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 9999999;
+    justify-content: center;
+    align-items: center;
+}
+
+.chat-modal-content {
+    width: 90%;
+    max-width: 800px;
+    height: 80vh;
+    max-height: 700px;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.chat-modal-body {
+    flex: 1;
+    overflow: hidden;
+    height: 100%;
+}
+
+.chat-modal-body iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Responsive Design for modals */
+@media (max-width: 1200px) {
+    .chat-modal-content {
+        width: 95%;
+        max-width: 95%;
+    }
+}
+
+@media (max-width: 768px) {
+    .up-button {
+        width: 60px;
+        height: 60px;
+        right: 84px;
+    }
+    
+    .up-button i {
+        font-size: 26px;
+        width: 26px;
+        height: 26px;
+    }
+    
+    .click-hint {
+        font-size: 0.75rem;
+        padding: 4px 8px;
+    }
+    
+    .notification-badge {
+        width: 18px;
+        height: 18px;
+        font-size: 9px;
+    }
+    
+    .chat-modal-content {
+        width: 98%;
+        max-width: 98%;
+        height: 85vh;
+        max-height: 85vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .up-button {
+        width: 55px;
+        height: 55px;
+        right: 77px;
+    }
+    
+    .up-button i {
+        font-size: 24px;
+        width: 24px;
+        height: 24px;
+    }
+    
+    .click-hint {
+        font-size: 0.7rem;
+        padding: 3px 7px;
+    }
+    
+    .chat-modal-content {
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+        max-height: 100%;
+        border-radius: 0;
+    }
+}
+
+/* Landscape orientation support */
+@media (max-height: 600px) and (orientation: landscape) {
+    .chat-modal-content {
+        max-height: 95vh;
+    }
+}
+
+/* Confirmation Modal Specific Styles */
+.confirmation-content {
+    background-color: white;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    animation: slideUp 0.3s ease-out;
+}
+
+.confirmation-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.confirmation-checkbox input[type="checkbox"] {
+    accent-color: #0a3b7c;
+}
+
+.confirmation-checkbox input[type="checkbox"]:checked {
+    background-color: #0a3b7c;
+}
+
+.confirmation-buttons button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.confirmation-buttons button:active {
+    transform: translateY(0);
+}
+
+/* Cancel button - consistent red color */
+#cancelButton {
+    background-color: #dc3545 !important;
+    color: white !important;
+    border-color: #dc3545 !important;
+}
+
+#cancelButton:hover {
+    background-color: #dc3545 !important;
+    color: white !important;
+    border-color: #dc3545 !important;
+}
+
+/* Proceed button - consistent dark blue color */
+#proceedButton:not(:disabled) {
+    background-color: #0a3b7c !important;
+    color: white !important;
+    border-color: #0a3b7c !important;
+}
+
+#proceedButton:not(:disabled):hover {
+    background-color: #0a3b7c !important;
+    color: white !important;
+    border-color: #0a3b7c !important;
+}
+
+#proceedButton:disabled {
+    background-color: #0a3b7c !important;
+    color: white !important;
+    border-color: #0a3b7c !important;
+    opacity: 0.6;
+}
+
+/* Responsive adjustments for confirmation modal */
+@media (max-width: 768px) {
+    .confirmation-content {
+        width: 95%;
+        max-width: 95%;
+        margin: 20px;
+        border-radius: 16px !important;
+        overflow: hidden;
+    }
+    
+    .confirmation-body {
+        padding: 20px;
+    }
+    
+    .confirmation-checkbox {
+        padding: 12px;
+        border-radius: 12px;
+    }
+    
+    .confirmation-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .confirmation-buttons button {
+        width: 100%;
+        border-radius: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .confirmation-content {
+        width: 98%;
+        max-width: 98%;
+        margin: 10px;
+        border-radius: 14px !important;
+    }
+    
+    .confirmation-body {
+        padding: 15px;
+    }
+    
+    .confirmation-header h3 {
+        font-size: 1.3rem;
+    }
+    
+    .confirmation-checkbox {
+        border-radius: 10px;
+    }
+}
