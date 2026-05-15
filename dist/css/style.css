@@ -1225,8 +1225,8 @@
   border: solid 1px white;
 }
 .footer .up-button .fa {
-  margin-top: -5px;
-  font-size: 20px;
+  margin-top: -1px;
+  font-size: 23px;
 }
 .footer .up-button:hover {
   cursor: pointer;
